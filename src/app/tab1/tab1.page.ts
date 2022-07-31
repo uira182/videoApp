@@ -20,21 +20,24 @@ export class Tab1Page {
       classificacao:'76',
       duracao:'1h 59m',
       generos:['Ação', 'Aventura', 'Fantasia'],
-      lancamento:'08/07/2022 (BR)'
+      lancamento:'08/07/2022 (BR)',
+      pagina: '/tor'
     },{
       nome:'Jurassic World: Domínio (2022)',
       cartaz:'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/7qeiCNSmzrkcEyIWi8sIcsjrOyW.jpg',
       classificacao:'71',
       duracao:'2h 27m',
       generos:['Aventura', 'Ação', 'Ficção científica'],
-      lancamento:'02/06/2022 (BR)'
+      lancamento:'02/06/2022 (BR)',
+      pagina: '/jurassic'
     },{
       nome:'Minions 2: A Origem de Gru (2022)',
       cartaz:'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/tzFAboMUGJKoPQEtlxfxbbYsSWa.jpg',
       classificacao:'75',
       duracao:'1h 27m',
       generos:['Família', 'Animação', 'Aventura', 'Comédia', 'Fantasia'],
-      lancamento:'30/06/2022 (BR)'
+      lancamento:'30/06/2022 (BR)',
+      pagina: '/minions'
     }
   ];
 
