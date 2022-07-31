@@ -1,0 +1,19 @@
+img{
+  width: 20%;
+}
+ion-fab{
+  width: 50px;
+}
+ion-fab-button{
+  width: 30px;
+  height: 30px;
+  opacity: 0.5;
+}
+@media only screen and (max-width: 600px) {
+  body {
+    background-color: lightblue;
+  }
+  img{
+    width: 50%;
+  }
+}
