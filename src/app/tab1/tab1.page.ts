@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular';
+import { IFilme } from '../models/iFilme.model';
 
 @Component({
   selector: 'app-tab1',
@@ -9,6 +10,33 @@ import { AlertController, ToastController } from '@ionic/angular';
 export class Tab1Page {
   handlerMessage = '';
   roleMessage = '';
+
+  titulo = 'Videos App';
+
+  listaVideos: IFilme[] = [
+    {
+      nome:'Thor: Amor e Trovão (2022)',
+      cartaz:'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/6OEBp0Gqv6DsOgi8diPUslT2kbA.jpg',
+      classificacao:'76',
+      duracao:'1h 59m',
+      generos:['Ação', 'Aventura', 'Fantasia'],
+      lancamento:'08/07/2022 (BR)'
+    },{
+      nome:'Jurassic World: Domínio (2022)',
+      cartaz:'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/7qeiCNSmzrkcEyIWi8sIcsjrOyW.jpg',
+      classificacao:'71',
+      duracao:'2h 27m',
+      generos:['Aventura', 'Ação', 'Ficção científica'],
+      lancamento:'02/06/2022 (BR)'
+    },{
+      nome:'Minions 2: A Origem de Gru (2022)',
+      cartaz:'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/tzFAboMUGJKoPQEtlxfxbbYsSWa.jpg',
+      classificacao:'75',
+      duracao:'1h 27m',
+      generos:['Família', 'Animação', 'Aventura', 'Comédia', 'Fantasia'],
+      lancamento:'30/06/2022 (BR)'
+    }
+  ];
 
   constructor(private alertController: AlertController, public toastController: ToastController) {}
   async presentAlert() {
