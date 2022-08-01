@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { TorPageRoutingModule } from './tor-routing.module';
+import { LoginPageRoutingModule } from './login-routing.module';
 
-import { TorPage } from './tor.page';
+import { LoginPage } from './login.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TorPageRoutingModule
+    LoginPageRoutingModule
   ],
-  declarations: [TorPage]
+  declarations: [LoginPage]
 })
-export class TorPageModule {}
+export class LoginPageModule {}
