@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
-import { IFilme } from '../models/iFilme.model';
+import { IFilme } from '../models/IFilme.model';
 import { DadosService } from '../services/dados.service';
 
 @Component({
