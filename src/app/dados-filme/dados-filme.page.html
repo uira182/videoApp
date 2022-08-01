@@ -9,7 +9,7 @@
 
 <ion-content color="light">
   <ion-card *ngIf="filme">
-    <ion-card-header>
+    <ion-card-header class="ion-text-center">
       <img *ngIf="filme.poster_path" src="https://www.themoviedb.org/t/p//w500/{{filme.poster_path}}" />
     </ion-card-header>
 
@@ -23,6 +23,9 @@
     <ion-item>
       <ion-badge color="light" *ngFor="let idGenero of filme.genre_ids">{{generos[idGenero]}}</ion-badge>
     </ion-item>
+    <ion-card>
+      <ion-card-content>{{filme.overview}}</ion-card-content>
+    </ion-card>
   </ion-card>
 
 </ion-content>

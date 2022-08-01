@@ -7,14 +7,61 @@ p{
   font-size: 0.7rem;
 }
 
+ion-content{
+  ion-card {
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    ion-badge{
+      font-weight: 300;
+      font-size: 0.8rem;
+      margin-right: 3px;
+    }
 
-ion-badge{
-  font-weight: 300;
-  font-size: 0.8rem;
-  margin-right: 3px;
+    ion-icon{
+      font-size: 100px;
+      color: #dcdcdc;
+    }
+
+    ion-card {
+      width: 100%;
+      margin: 0px;
+      padding: 0px;
+    }
+  }
 }
 
-ion-icon{
-  font-size: 100px;
-  color: #dcdcdc;
+@media only screen and (max-width: 600px) {
+  h1{
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  p{
+    font-size: 0.7rem;
+  }
+
+  ion-content{
+    ion-card {
+      width: auto;
+      margin: 10px;
+      ion-badge{
+        font-weight: 300;
+        font-size: 0.8rem;
+        margin-right: 3px;
+      }
+
+      ion-icon{
+        font-size: 100px;
+        color: #dcdcdc;
+      }
+
+      ion-card{
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+      }
+    }
+  }
 }

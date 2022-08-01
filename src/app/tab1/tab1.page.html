@@ -21,9 +21,9 @@
       <ion-item lines="full" (click)="exibirFilme(filme)">
         <ion-thumbnail slot="start">
           <img *ngIf ="filme.poster_path"
-            src="https://www.themoviedb.org/t/p//w500/{{filme.poster_path}}"
+            src="https://www.themoviedb.org/t/p/w500/{{filme.poster_path}}"
           />
-          <ion-icon *ngIf ="!filme.poster_path" name="videocam-off"></ion-icon>
+          <ion-icon *ngIf="!filme.poster_path" name="videocam-off"></ion-icon>
         </ion-thumbnail>
         <ion-label class="ion-text-wrap">
           <div>
