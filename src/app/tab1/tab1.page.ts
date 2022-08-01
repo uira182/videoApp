@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 import { IFilme } from '../models/iFilme.model';
+import { DadosService } from '../services/dados.service';
 
 @Component({
   selector: 'app-tab1',
@@ -41,7 +43,17 @@ export class Tab1Page {
     }
   ];
 
-  constructor(private alertController: AlertController, public toastController: ToastController) {}
+  constructor(
+    private alertController: AlertController,
+    public toastController: ToastController,
+    public dadosService: DadosService,
+    public route: Router) {}
+
+    exibirFilme(filme: IFilme){
+      this.dadosService.guardarDados('filme', filme);
+      this.route.navigateByUrl('/dados-filme');
+    }
+
   async presentAlert() {
     const alert = await this.alertController.create({
       header: 'Alert!',

@@ -17,6 +17,10 @@ const routes: Routes = [
   {
     path: 'minions',
     loadChildren: () => import('./filmes/minions/minions.module').then( m => m.MinionsPageModule)
+  },
+  {
+    path: 'dados-filme',
+    loadChildren: () => import('./dados-filme/dados-filme.module').then( m => m.DadosFilmePageModule)
   }
 ];
 @NgModule({
