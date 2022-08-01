@@ -1,9 +1,30 @@
 ion-content{
   --background: #000000;
+  ion-card{
+    width: 30%;
+    margin: 0 auto;
+  }
+  .center{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+  }
 }
 
-.center{
-  height: 100vh;
-  display: flex;
-  align-items: center;
+
+
+@media only screen and (max-width: 600px) {
+  ion-content{
+    --background: #000000;
+    ion-card{
+      width: 100%;
+      margin: 0 auto;
+    }
+    .center{
+      height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+  }
+
 }

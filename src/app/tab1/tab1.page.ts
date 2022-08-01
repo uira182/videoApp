@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
-import { IFilme } from '../models/IFilme.model';
 import { IFilmeApi, IListaFilmes } from '../models/IFilmeAPI.model';
-import { IGenero } from '../models/IGenero.model';
 import { DadosService } from '../services/dados.service';
 import { FilmeService } from '../services/filme.service';
 import { GeneroService } from '../services/genero.service';
@@ -19,34 +17,6 @@ export class Tab1Page implements OnInit{
 
   titulo = 'Filmes App';
 
-  listaVideos: IFilme[] = [
-    {
-      nome:'Thor: Amor e Trovão (2022)',
-      cartaz:'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/6OEBp0Gqv6DsOgi8diPUslT2kbA.jpg',
-      classificacao:'76',
-      duracao:'1h 59m',
-      generos:['Ação', 'Aventura', 'Fantasia'],
-      lancamento:'08/07/2022 (BR)',
-      pagina: '/tor'
-    },{
-      nome:'Jurassic World: Domínio (2022)',
-      cartaz:'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/7qeiCNSmzrkcEyIWi8sIcsjrOyW.jpg',
-      classificacao:'71',
-      duracao:'2h 27m',
-      generos:['Aventura', 'Ação', 'Ficção científica'],
-      lancamento:'02/06/2022 (BR)',
-      pagina: '/jurassic'
-    },{
-      nome:'Minions 2: A Origem de Gru (2022)',
-      cartaz:'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/tzFAboMUGJKoPQEtlxfxbbYsSWa.jpg',
-      classificacao:'75',
-      duracao:'1h 27m',
-      generos:['Família', 'Animação', 'Aventura', 'Comédia', 'Fantasia'],
-      lancamento:'30/06/2022 (BR)',
-      pagina: '/minions'
-    }
-  ];
-
   listaFilmes: IListaFilmes;
 
   generos: string[] = [];
@@ -59,6 +29,7 @@ export class Tab1Page implements OnInit{
     public generoService: GeneroService,
     public route: Router) {}
 
+
     buscarFilmes(evento: any){
       console.log(evento.target.value);
       const busca = evento.target.value;
@@ -67,7 +38,16 @@ export class Tab1Page implements OnInit{
           console.log(dados);
           this.listaFilmes = dados;
         });
+      }else{
+        this.buscarFilmesLancamento();
       }
+    }
+
+    buscarFilmesLancamento(){
+      this.filmeService.buscarFilmesLancamento().subscribe(dados=>{
+        console.log(dados);
+        this.listaFilmes = dados;
+      });
     }
 
     exibirFilme(filme: IFilmeApi){
@@ -106,7 +86,7 @@ export class Tab1Page implements OnInit{
   }
 
   ngOnInit(): void {
-      this.generoService.buscarGeneros().subscribe(dados => {
+      this.generoService.buscarGenerosFilme().subscribe(dados => {
         console.log('Generos: ', dados.genres);
         dados.genres.forEach(genero => {
           this.generos[genero.id] = genero.name;
@@ -114,5 +94,7 @@ export class Tab1Page implements OnInit{
 
         this.dadosService.guardarDados('generos', this.generos);
       });
+
+      this.buscarFilmesLancamento();
   }
 }

@@ -10,7 +10,6 @@ import { DadosService } from '../services/dados.service';
 export class DadosFilmePage implements OnInit {
 
   filme: IFilmeApi;
-
   generos: string[] = [];
 
   constructor(public dadosService: DadosService) { }

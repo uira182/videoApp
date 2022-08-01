@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IListaFilmes } from '../models/IFilmeAPI.model';
 import { ToastController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { IListaSerie } from '../models/ISerieAPI.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FilmeService {
+export class SerieService {
 
   lingua = 'pt-BR';
   regiao = 'BR';
@@ -17,20 +17,19 @@ export class FilmeService {
   private key = '?api_key=0961a07b3607c784ef87c0974cea8930';
 
   constructor(private http: HttpClient, public toastController: ToastController) { }
+  buscarSeries(busca: string): Observable<IListaSerie>{
+    const url = `${this.apiURL}search/tv${this.key}&language=${this.lingua}&query=${busca}`;
 
-  buscarFilmes(busca: string): Observable<IListaFilmes>{
-    const url = `${this.apiURL}search/movie${this.key}&language=${this.lingua}&region=${this.regiao}&query=${busca}`;
-
-    return this.http.get<IListaFilmes>(url).pipe(
+    return this.http.get<IListaSerie>(url).pipe(
       map(retorno => retorno),
       catchError(erro => this.exibirErro(erro))
     );
   }
 
-  buscarFilmesLancamento(): Observable<IListaFilmes>{
-    const url = `${this.apiURL}movie/popular${this.key}&language=${this.lingua}&page=1`;
+  buscarSeriesLancamento(): Observable<IListaSerie>{
+    const url = `${this.apiURL}tv/popular${this.key}&language=${this.lingua}&page=1`;
 
-    return this.http.get<IListaFilmes>(url).pipe(
+    return this.http.get<IListaSerie>(url).pipe(
       map(retorno => retorno),
       catchError(erro => this.exibirErro(erro))
     );

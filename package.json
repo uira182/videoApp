@@ -27,6 +27,7 @@
     "@ionic/angular": "^6.1.9",
     "@ionic/cordova-builders": "^7.0.0",
     "bootstrap": "^5.2.0",
+    "native-run": "^1.6.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"
@@ -73,7 +74,7 @@
   },
   "description": "An Ionic project",
   "config": {
-      "ionic_sass": "./sass.config.js"
+    "ionic_sass": "./sass.config.js"
   },
   "cordova": {
     "plugins": {
