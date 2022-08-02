@@ -34,8 +34,8 @@
         <ion-grid>
           <ion-row>
             <ion-col size="6" size-xs="12" size-sm="12" size-md="12" size-lg="6" *ngFor="let tra of trailer.results">
-              <iframe width="100%" height="300px" [src]="tra.key | youtube" title="YouTube video player" frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+              <iframe width="100%" height="315px" [src]="tra.key | youtube" [title]="tra.name" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture " allowfullscreen></iframe>
             </ion-col>
           </ion-row>
         </ion-grid>
