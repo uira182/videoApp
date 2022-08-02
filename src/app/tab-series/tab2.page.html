@@ -1,12 +1,12 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="dark">
     <ion-title>
       {{titulo}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="false" color="light">
   <!-- Default Searchbar -->
   <ion-searchbar placeholder="Buscar" (ionChange)="buscarSeries($event)"></ion-searchbar>
   <ion-list *ngIf="listaSeries">
@@ -16,7 +16,7 @@
         Não há filmes para exibir...
       </ion-label>
     </ion-item>
-
+    
     <ion-item-sliding *ngFor="let serie of listaSeries.results">
       <ion-item lines="full" (click)="exibirSeries(serie)">
         <ion-thumbnail slot="start">

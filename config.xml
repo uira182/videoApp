@@ -6,6 +6,8 @@
     <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="https://*youtube.com/*" />
+    <allow-navigation href="https://*localhost*" />
+    <allow-navigation href="http://*localhost*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />

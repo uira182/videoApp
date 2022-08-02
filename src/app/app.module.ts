@@ -12,7 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
-import { YoutubePipe } from './youtube.pipe';
+import { YoutubePipe } from './pipes/youtube.pipe';
 
 registerLocaleData(localePt);
 
