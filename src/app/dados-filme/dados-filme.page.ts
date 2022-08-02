@@ -16,6 +16,9 @@ export class DadosFilmePage implements OnInit {
   generos: string[] = [];
 
   constructor(public dadosService: DadosService, public trailerService: TrailerService) {
+  }
+
+  ngOnInit() {
     this.filme = this.dadosService.pegarDados('filme');
     this.generos = this.dadosService.pegarDados('generos');
     this.trailerService.buscarTrailerFilme(this.filme.id).subscribe(dados=>{
@@ -23,9 +26,6 @@ export class DadosFilmePage implements OnInit {
       this.trailer = dados;
     });
     console.log('Filme Enviado', this.filme);
-  }
-
-  ngOnInit() {
   }
 
 }

@@ -27,7 +27,7 @@ export class TrailerService {
   }
 
   buscarTrailerSerie(id: number): Observable<IListaTrailer>{
-    const url = `${this.apiURL}/movie/${id}/videos${this.key}&language=${this.lingua}`;
+    const url = `${this.apiURL}/tv/${id}/videos${this.key}&language=${this.lingua}`;
 
     return this.http.get<IListaTrailer>(url).pipe(
       map(retorno => retorno),

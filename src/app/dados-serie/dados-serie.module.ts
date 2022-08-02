@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { DadosSeriePageRoutingModule } from './dados-serie-routing.module';
 
 import { DadosSeriePage } from './dados-serie.page';
+import { YoutubePipe } from '../youtube.pipe';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { DadosSeriePage } from './dados-serie.page';
     IonicModule,
     DadosSeriePageRoutingModule
   ],
-  declarations: [DadosSeriePage]
+  declarations: [DadosSeriePage, YoutubePipe]
 })
 export class DadosSeriePageModule {}

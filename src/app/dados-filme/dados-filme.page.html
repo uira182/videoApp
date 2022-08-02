@@ -24,7 +24,22 @@
       <ion-badge color="light" *ngFor="let idGenero of filme.genre_ids">{{generos[idGenero]}}</ion-badge>
     </ion-item>
     <ion-card>
-      <ion-card-content>{{filme.overview}}</ion-card-content>
+      <ion-card-content><p>{{filme.overview}}</p></ion-card-content>
+    </ion-card>
+    <ion-card id="trailer" *ngIf="trailer?.results.length > 0">
+      <ion-card-header>
+        <h1>Trailers</h1>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6" size-xs="12" size-sm="12" size-md="12" size-lg="6" *ngFor="let tra of trailer.results">
+              <iframe width="100%" height="300px" [src]="tra.key | youtube" title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
     </ion-card>
   </ion-card>
 

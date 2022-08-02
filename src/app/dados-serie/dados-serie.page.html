@@ -3,13 +3,13 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
-    <ion-title>Dados da Série</ion-title>
+    <ion-title>Dados do Serie</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content color="light">
   <ion-card *ngIf="serie">
-    <ion-card-header>
+    <ion-card-header class="ion-text-center">
       <img *ngIf="serie.poster_path" src="https://www.themoviedb.org/t/p//w500/{{serie.poster_path}}" />
     </ion-card-header>
 
@@ -23,11 +23,24 @@
     <ion-item>
       <ion-badge color="light" *ngFor="let idGenero of serie.genre_ids">{{generos[idGenero]}}</ion-badge>
     </ion-item>
-    <ion-card>
+    <ion-card *ngIf="serie.overview">
       <ion-card-content>
-        {{serie.overview}}
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/6JnN1DmbqoU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        <iframe width="100%" height="315" src="https://www.youtube.com/embed/otutSrxYpa4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <p>{{serie.overview}}</p>
+      </ion-card-content>
+    </ion-card>
+    <ion-card id="trailer" *ngIf="trailer?.results.length > 0">
+      <ion-card-header>
+        <h1>Trailers</h1>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6" size-xs="12" size-sm="12" size-md="12" size-lg="6" *ngFor="let tra of trailer.results">
+              <iframe width="100%" height="300px" [src]="tra.key | youtube" title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-card-content>
     </ion-card>
   </ion-card>

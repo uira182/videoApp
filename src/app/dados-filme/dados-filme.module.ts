@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { DadosFilmePageRoutingModule } from './dados-filme-routing.module';
 
 import { DadosFilmePage } from './dados-filme.page';
+import { YoutubePipe } from '../youtube.pipe';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { DadosFilmePage } from './dados-filme.page';
     IonicModule,
     DadosFilmePageRoutingModule
   ],
-  declarations: [DadosFilmePage]
+  declarations: [DadosFilmePage, YoutubePipe]
 })
 export class DadosFilmePageModule {}
