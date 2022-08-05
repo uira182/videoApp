@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
@@ -22,6 +23,9 @@ export class Tab1Page implements OnInit{
 
   generos: string[] = [];
 
+  series: number[] = [];
+  filmes: number[] = [];
+
   constructor(
     private alertController: AlertController,
     public toastController: ToastController,
@@ -39,7 +43,7 @@ export class Tab1Page implements OnInit{
       const busca = evento.target.value;
       if(busca && busca.trim() !== ''){
         this.filmeService.buscarFilmes(busca).subscribe(dados=>{
-          console.log(dados);
+          console.log('Filmes: ', dados);
           this.listaFilmes = dados;
         });
       }else{
@@ -49,7 +53,7 @@ export class Tab1Page implements OnInit{
 
     buscarFilmesLancamento(){
       this.filmeService.buscarFilmesLancamento().subscribe(dados=>{
-        console.log(dados);
+        console.log('Filmes: ', dados);
         this.listaFilmes = dados;
       });
     }
@@ -59,7 +63,7 @@ export class Tab1Page implements OnInit{
       this.route.navigateByUrl('/dados-filme');
     }
 
-  async presentAlert() {
+  async presentAlert(id: number, tipo: number) {
     const alert = await this.alertController.create({
       header: 'Alert!',
       message: 'Deseja realmente favoritar o filme?',
@@ -71,7 +75,10 @@ export class Tab1Page implements OnInit{
         },
         {
           text: 'Sim, Favoritar!',
-          handler: () => { console.log('Confirm Okay.'); this.presentToast(); }
+          handler: () => {
+            console.log('Confirm Okay.');
+            this.favoritar(id, tipo);
+          }
         }
       ]
     });
@@ -79,14 +86,77 @@ export class Tab1Page implements OnInit{
     await alert.present();
   }
 
-  async presentToast() {
+  favoritar(id: number, tipo: number){
+
+    if(localStorage.getItem('favoritos')){
+      const ret = this.adicionarAoStorage(id, tipo);
+      console.log('Retorno ao adicionar favorito', ret);
+      ret ? this.presentToast('Filme adicionado aos favoritos.', true) : this.presentToast('Filme existe entre os favoritos.', false);
+    }else{
+      this.criarLocalStorage();
+      const ret = this.adicionarAoStorage(id, tipo);
+      console.log('Retorno ao adicionar novo', ret);
+      ret ? this.presentToast('Filme adicionado aos favoritos.', true) : this.presentToast('Filme existe entre os favoritos.', false);
+    }
+  }
+
+  criarLocalStorage(){
+    localStorage.setItem('favoritos', JSON.stringify({filmes:[], series:[]}));
+  }
+
+  adicionarAoStorage(id: number, tipo: number): boolean{
+    let confirmFavorito = false;
+    const favoritos = JSON.parse(localStorage.getItem('favoritos'));
+
+    this.filmes = favoritos.filmes;
+    this.series = favoritos.series;
+
+    if (tipo === 0 && this.filmes.indexOf(id) < 0) {
+      this.filmes.push(id);
+      confirmFavorito = true;
+    }else if (tipo === 1 && this.series.indexOf(id) < 0){
+      this.series.push(id);
+      confirmFavorito = true;
+    }else{
+      confirmFavorito = false;
+    }
+
+    localStorage.setItem('favoritos', JSON.stringify({
+      filmes: this.filmes,
+      series: this.series
+    }));
+
+    return confirmFavorito;
+  }
+
+  async presentToast(mensagem: string, tipo: boolean) {
     const toast = await this.toastController.create({
-      message: 'Filme adicionado aos favoritos.',
+      message: mensagem,
       duration: 2000,
       position: 'top',
-      color:'success'
+      color: tipo ? 'success' : 'warning'
     });
     toast.present();
+  }
+
+  verificaFavorito(id: number, tipo: number): boolean{
+    let confirm = false;
+
+    if(localStorage.getItem('favoritos')){
+      const favoritos = JSON.parse(localStorage.getItem('favoritos'));
+
+      this.filmes = favoritos.filmes;
+      this.series = favoritos.series;
+      if (tipo === 0) {
+        this.filmes.indexOf(id) >= 0 ? confirm = true : confirm =  false;
+      }else{
+        this.series.indexOf(id) >= 0 ? confirm = true : confirm =  false;
+      }
+    }else{
+      confirm = false;
+    }
+
+    return confirm;
   }
 
   ngOnInit(): void {

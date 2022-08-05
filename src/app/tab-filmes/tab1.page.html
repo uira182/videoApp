@@ -40,7 +40,7 @@
         </ion-chip>
       </ion-item>
       <ion-item-options side="end">
-        <ion-item-option color="light" (click)="presentAlert()">
+        <ion-item-option [color]="verificaFavorito(filme.id, 0)? 'danger' : 'light'" (click)="presentAlert(filme.id, 0)">
           <ion-icon slot="icon-only" name="star-outline"></ion-icon>
         </ion-item-option>
       </ion-item-options>
