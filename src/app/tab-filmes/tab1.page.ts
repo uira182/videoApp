@@ -23,9 +23,6 @@ export class Tab1Page implements OnInit{
 
   generos: string[] = [];
 
-  series: number[] = [];
-  filmes: number[] = [];
-
   constructor(
     private alertController: AlertController,
     public toastController: ToastController,
@@ -38,35 +35,35 @@ export class Tab1Page implements OnInit{
     }
 
 
-    buscarFilmes(evento: any){
-      console.log(evento.target.value);
-      const busca = evento.target.value;
-      if(busca && busca.trim() !== ''){
-        this.filmeService.buscarFilmes(busca).subscribe(dados=>{
-          console.log('Filmes: ', dados);
-          this.listaFilmes = dados;
-        });
-      }else{
-        this.buscarFilmesLancamento();
-      }
-    }
-
-    buscarFilmesLancamento(){
-      this.filmeService.buscarFilmesLancamento().subscribe(dados=>{
+  buscarFilmes(evento: any){
+    console.log(evento.target.value);
+    const busca = evento.target.value;
+    if(busca && busca.trim() !== ''){
+      this.filmeService.buscarFilmes(busca).subscribe(dados=>{
         console.log('Filmes: ', dados);
         this.listaFilmes = dados;
       });
+    }else{
+      this.buscarFilmesLancamento();
     }
+  }
 
-    exibirFilme(filme: IFilmeApi){
-      this.dadosService.guardarDados('filme', filme);
-      this.route.navigateByUrl('/dados-filme');
-    }
+  buscarFilmesLancamento(){
+    this.filmeService.buscarFilmesLancamento().subscribe(dados=>{
+      console.log('Filmes: ', dados);
+      this.listaFilmes = dados;
+    });
+  }
 
-  async presentAlert(id: number, tipo: number) {
+  exibirFilme(filme: IFilmeApi){
+    this.dadosService.guardarDados('filme', filme);
+    this.route.navigateByUrl('/dados-filme');
+  }
+
+  async presentAlert(id: number, tipo: number, favorito: boolean) {
     const alert = await this.alertController.create({
       header: 'Alert!',
-      message: 'Deseja realmente favoritar o filme?',
+      message: favorito ? 'Deseja remover o favorito?' : 'Deseja realmente favoritar o filme?',
       buttons: [
         {
           text: 'Cancelar',
@@ -77,13 +74,39 @@ export class Tab1Page implements OnInit{
           text: 'Sim, Favoritar!',
           handler: () => {
             console.log('Confirm Okay.');
-            this.favoritar(id, tipo);
+            favorito ? this.removerFavorito(id, tipo) : this.favoritar(id, tipo);
           }
         }
       ]
     });
 
     await alert.present();
+  }
+
+  removerFavorito(id: number, tipo: number){
+    console.log('ID: ', id);
+
+    let filmes: number[] = [];
+    let series: number[] = [];
+
+    const favoritos = JSON.parse(localStorage.getItem('favoritos'));
+
+    filmes = favoritos.filmes;
+    series = favoritos.series;
+
+    if(tipo === 0){
+      console.log('Favorito - Filme: ', filmes);
+      const index = filmes.indexOf(id);
+      filmes.splice(index, 1);
+      console.log('Removeu - Filme: ', filmes);
+    }else{
+      console.log('Favorito - Series: ', series);
+      const index = series.indexOf(id);
+      series.splice(index, 1);
+      console.log('Removeu - Serie: ', series);
+    }
+
+    this.salvaFavoritos(filmes, series);
   }
 
   favoritar(id: number, tipo: number){
@@ -106,27 +129,35 @@ export class Tab1Page implements OnInit{
 
   adicionarAoStorage(id: number, tipo: number): boolean{
     let confirmFavorito = false;
+
+    let filmes: number[] = [];
+    let series: number[] = [];
+
     const favoritos = JSON.parse(localStorage.getItem('favoritos'));
 
-    this.filmes = favoritos.filmes;
-    this.series = favoritos.series;
+    filmes = favoritos.filmes;
+    series = favoritos.series;
 
-    if (tipo === 0 && this.filmes.indexOf(id) < 0) {
-      this.filmes.push(id);
+    if (tipo === 0 && filmes.indexOf(id) < 0) {
+      filmes.push(id);
       confirmFavorito = true;
-    }else if (tipo === 1 && this.series.indexOf(id) < 0){
-      this.series.push(id);
+    }else if (tipo === 1 && series.indexOf(id) < 0){
+      series.push(id);
       confirmFavorito = true;
     }else{
       confirmFavorito = false;
     }
 
-    localStorage.setItem('favoritos', JSON.stringify({
-      filmes: this.filmes,
-      series: this.series
-    }));
+    this.salvaFavoritos(filmes, series);
 
     return confirmFavorito;
+  }
+
+  salvaFavoritos(addFilmes: number[], addSeries: number[]){
+    localStorage.setItem('favoritos', JSON.stringify({
+      filmes: addFilmes,
+      series: addSeries
+    }));
   }
 
   async presentToast(mensagem: string, tipo: boolean) {
@@ -142,16 +173,21 @@ export class Tab1Page implements OnInit{
   verificaFavorito(id: number, tipo: number): boolean{
     let confirm = false;
 
+    let filmes: number[] = [];
+    let series: number[] = [];
+
     if(localStorage.getItem('favoritos')){
       const favoritos = JSON.parse(localStorage.getItem('favoritos'));
 
-      this.filmes = favoritos.filmes;
-      this.series = favoritos.series;
+      filmes = favoritos.filmes;
+      series = favoritos.series;
+
       if (tipo === 0) {
-        this.filmes.indexOf(id) >= 0 ? confirm = true : confirm =  false;
+        filmes.indexOf(id) >= 0 ? confirm = true : confirm =  false;
       }else{
-        this.series.indexOf(id) >= 0 ? confirm = true : confirm =  false;
+        series.indexOf(id) >= 0 ? confirm = true : confirm =  false;
       }
+
     }else{
       confirm = false;
     }

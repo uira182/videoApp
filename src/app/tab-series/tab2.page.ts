@@ -23,9 +23,6 @@ export class Tab2Page implements OnInit{
 
   generos: string[] = [];
 
-  series: number[] = [];
-  filmes: number[] = [];
-
   constructor(
     private alertController: AlertController,
     public toastController: ToastController,
@@ -63,10 +60,10 @@ export class Tab2Page implements OnInit{
     this.route.navigateByUrl('/dados-serie');
   }
 
-  async presentAlert(id: number, tipo: number) {
+  async presentAlert(id: number, tipo: number, favorito: boolean) {
     const alert = await this.alertController.create({
       header: 'Alert!',
-      message: 'Deseja realmente favoritar o filme?',
+      message: favorito ? 'Deseja remover o favorito?' : 'Deseja realmente favoritar a serie?',
       buttons: [
         {
           text: 'Cancelar',
@@ -77,12 +74,38 @@ export class Tab2Page implements OnInit{
           text: 'Sim, Favoritar!',
           handler: () => {
             console.log('Confirm Okay.');
-            this.favoritar(id, tipo);
+            favorito ? this.removerFavorito(id, tipo) : this.favoritar(id, tipo);
           }
         }
       ]
     });
     await alert.present();
+  }
+
+  removerFavorito(id: number, tipo: number){
+    console.log('ID: ', id);
+
+    let filmes: number[] = [];
+    let series: number[] = [];
+
+    const favoritos = JSON.parse(localStorage.getItem('favoritos'));
+
+    filmes = favoritos.filmes;
+    series = favoritos.series;
+
+    if(tipo === 0){
+      console.log('Favorito - Filme: ', filmes);
+      const index = filmes.indexOf(id);
+      filmes.splice(index, 1);
+      console.log('Removeu - Filme: ', filmes);
+    }else{
+      console.log('Favorito - Series: ', series);
+      const index = series.indexOf(id);
+      series.splice(index, 1);
+      console.log('Removeu - Serie: ', series);
+    }
+
+    this.salvaFavoritos(filmes, series);
   }
 
   favoritar(id: number, tipo: number){
@@ -97,33 +120,43 @@ export class Tab2Page implements OnInit{
       console.log('Retorno ao adicionar novo', ret);
       ret ? this.presentToast('Filme adicionado aos favoritos.', true) : this.presentToast('Filme existe entre os favoritos.', false);
     }
-  }criarLocalStorage(){
+  }
+
+  criarLocalStorage(){
     localStorage.setItem('favoritos', JSON.stringify({filmes:[], series:[]}));
   }
 
   adicionarAoStorage(id: number, tipo: number): boolean{
     let confirmFavorito = false;
-    const favoritos = JSON.parse(localStorage.getItem('favoritos'));
-    console.log(favoritos);
-    this.filmes = favoritos.filmes;
-    this.series = favoritos.series;
 
-    if (tipo === 0 && this.filmes.indexOf(id) < 0) {
-      this.filmes.push(id);
+    let filmes: number[] = [];
+    let series: number[] = [];
+
+    const favoritos = JSON.parse(localStorage.getItem('favoritos'));
+
+    filmes = favoritos.filmes;
+    series = favoritos.series;
+
+    if (tipo === 0 && filmes.indexOf(id) < 0) {
+      filmes.push(id);
       confirmFavorito = true;
-    }else if (tipo === 1 && this.series.indexOf(id) < 0){
-      this.series.push(id);
+    }else if (tipo === 1 && series.indexOf(id) < 0){
+      series.push(id);
       confirmFavorito = true;
     }else{
       confirmFavorito = false;
     }
 
-    localStorage.setItem('favoritos', JSON.stringify({
-      filmes: this.filmes,
-      series: this.series
-    }));
+    this.salvaFavoritos(filmes, series);
 
     return confirmFavorito;
+  }
+
+  salvaFavoritos(addFilmes: number[], addSeries: number[]){
+    localStorage.setItem('favoritos', JSON.stringify({
+      filmes: addFilmes,
+      series: addSeries
+    }));
   }
 
   async presentToast(mensagem: string, tipo: boolean) {
@@ -139,16 +172,21 @@ export class Tab2Page implements OnInit{
   verificaFavorito(id: number, tipo: number): boolean{
     let confirm = false;
 
+    let filmes: number[] = [];
+    let series: number[] = [];
+
     if(localStorage.getItem('favoritos')){
       const favoritos = JSON.parse(localStorage.getItem('favoritos'));
 
-      this.filmes = favoritos.filmes;
-      this.series = favoritos.series;
+      filmes = favoritos.filmes;
+      series = favoritos.series;
+
       if (tipo === 0) {
-        this.filmes.indexOf(id) >= 0 ? confirm = true : confirm =  false;
+        filmes.indexOf(id) >= 0 ? confirm = true : confirm =  false;
       }else{
-        this.series.indexOf(id) >= 0 ? confirm = true : confirm =  false;
+        series.indexOf(id) >= 0 ? confirm = true : confirm =  false;
       }
+
     }else{
       confirm = false;
     }
