@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 import { ISerieApi, IListaSerie } from '../models/ISerieAPI.model';
+import { ConnectService } from '../services/connect.service';
 import { DadosService } from '../services/dados.service';
 import { GeneroService } from '../services/genero.service';
 import { SerieService } from '../services/serie.service';
@@ -27,7 +28,10 @@ export class Tab2Page implements OnInit{
     public dadosService: DadosService,
     public serieService: SerieService,
     public generoService: GeneroService,
-    public route: Router) {}
+    public route: Router,
+    public connectService: ConnectService) {
+      this.connectService.valida();
+    }
 
 
     buscarSeries(evento: any){

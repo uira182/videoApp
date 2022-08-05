@@ -5,7 +5,8 @@
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
     <content src="index.html" />
     <access origin="*" />
-    <allow-navigation href="https://*youtube.com/*" />
+    <allow-navigation href="https://*youtube*" />
+    <allow-navigation href="https://*googleads*" />
     <allow-navigation href="https://*localhost*" />
     <allow-navigation href="http://*localhost*" />
     <allow-intent href="http://*/*" />

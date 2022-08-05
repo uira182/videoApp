@@ -3,6 +3,11 @@
     <ion-title>
       {{titulo}}
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/login">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -16,14 +21,12 @@
         Não há filmes para exibir...
       </ion-label>
     </ion-item>
-    
+
     <ion-item-sliding *ngFor="let serie of listaSeries.results">
       <ion-item lines="full" (click)="exibirSeries(serie)">
         <ion-thumbnail slot="start">
-          <img *ngIf ="serie.poster_path"
-            src="https://www.themoviedb.org/t/p//w500/{{serie.poster_path}}"
-          />
-          <ion-icon *ngIf ="!serie.poster_path" name="videocam-off"></ion-icon>
+          <img *ngIf="serie.poster_path" src="https://www.themoviedb.org/t/p//w500/{{serie.poster_path}}" />
+          <ion-icon *ngIf="!serie.poster_path" name="videocam-off"></ion-icon>
         </ion-thumbnail>
         <ion-label class="ion-text-wrap">
           <div>

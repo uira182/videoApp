@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IFilmeApi } from '../models/IFilmeAPI.model';
 import { IListaTrailer, ITrailer } from '../models/ITrailer.model';
+import { ConnectService } from '../services/connect.service';
 import { DadosService } from '../services/dados.service';
 import { TrailerService } from '../services/trailer.service';
 
@@ -15,7 +16,10 @@ export class DadosFilmePage implements OnInit {
   trailer: IListaTrailer;
   generos: string[] = [];
 
-  constructor(public dadosService: DadosService, public trailerService: TrailerService) {
+  constructor(public dadosService: DadosService,
+    public trailerService: TrailerService,
+    public connectService: ConnectService) {
+    this.connectService.valida();
   }
 
   ngOnInit() {

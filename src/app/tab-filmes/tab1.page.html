@@ -3,6 +3,11 @@
     <ion-title>
       {{titulo}}
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/login">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -20,9 +25,7 @@
     <ion-item-sliding *ngFor="let filme of listaFilmes.results">
       <ion-item lines="full" (click)="exibirFilme(filme)">
         <ion-thumbnail slot="start">
-          <img *ngIf ="filme.poster_path"
-            src="https://www.themoviedb.org/t/p/w500/{{filme.poster_path}}"
-          />
+          <img *ngIf="filme.poster_path" src="https://www.themoviedb.org/t/p/w500/{{filme.poster_path}}" />
           <ion-icon *ngIf="!filme.poster_path" name="videocam-off"></ion-icon>
         </ion-thumbnail>
         <ion-label class="ion-text-wrap">

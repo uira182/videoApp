@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 import { IFilmeApi, IListaFilmes } from '../models/IFilmeAPI.model';
+import { ConnectService } from '../services/connect.service';
 import { DadosService } from '../services/dados.service';
 import { FilmeService } from '../services/filme.service';
 import { GeneroService } from '../services/genero.service';
@@ -27,7 +28,10 @@ export class Tab1Page implements OnInit{
     public dadosService: DadosService,
     public filmeService: FilmeService,
     public generoService: GeneroService,
-    public route: Router) {}
+    public route: Router,
+    public connectService: ConnectService) {
+      this.connectService.valida();
+    }
 
 
     buscarFilmes(evento: any){
@@ -86,6 +90,7 @@ export class Tab1Page implements OnInit{
   }
 
   ngOnInit(): void {
+
       this.generoService.buscarGenerosFilme().subscribe(dados => {
         console.log('Generos: ', dados.genres);
         dados.genres.forEach(genero => {
